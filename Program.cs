@@ -417,16 +417,29 @@ class Program {
         return output;
     } 
 
-    static string SerializeObject(dynamic obj) {
+    static string SerializeObject(dynamic obj, bool prettyPrint=false, int depth=0) {
         string output = "";
 
         int i = -1;
         if(obj.GetType() == typeof(Dictionary<string, dynamic>)) {
+            if(prettyPrint) {
+                for(var j = 0; j < depth; j++) {
+                    output += " ";
+                }
+            }
             output += "{";
+            if(prettyPrint) {
+                output += "\n";
+            }
             foreach(KeyValuePair<string, dynamic> kvp in obj) {
                 i++;
+                if(prettyPrint) {
+                    for(var j = 0; j < depth + 2; j++) {
+                        output += " ";
+                    }
+                }
                 if(kvp.Value.GetType() == typeof(List<dynamic>) || kvp.Value.GetType() == typeof(Dictionary<string, dynamic>)) {
-                    output += $"{kvp.Key} = {SerializeObject(kvp.Value)}";
+                    output += $"{kvp.Key} = {SerializeObject(kvp.Value, prettyPrint, depth + 1)}";
                 } else {
                     if(kvp.Value.GetType() == typeof(string)) {
                         output += $"{kvp.Key} = \"{kvp.Value}\"";
@@ -440,14 +453,35 @@ class Program {
                 if(i != obj.Count - 1) {
                     output += ", ";
                 }
+                if(prettyPrint) {
+                    output += "\n";
+                }
+            }
+            if(prettyPrint) {
+                for(var j = 0; j < depth + 1; j++) {
+                    output += " ";
+                }
             }
             output += "}";
         } else if(obj.GetType() == typeof(List<dynamic>)) {
+            if(prettyPrint) {
+                for(var j = 0; j < depth; j++) {
+                    output += " ";
+                }
+            }
             output += "[";
+            if(prettyPrint) {
+                output += "\n";
+            }
             foreach(dynamic val in obj) {
                 i++;
+                if(prettyPrint) {
+                    for(var j = 0; j < depth; j++) {
+                        output += " ";
+                    }
+                }
                 if(val.GetType() == typeof(List<dynamic>) || val.GetType() == typeof(Dictionary<string, dynamic>)) {
-                    output += $"{SerializeObject(val)}";
+                    output += $"{SerializeObject(val, prettyPrint, depth + 1)}";
                 } else {
                     if(val.GetType() == typeof(string)) {
                         output += $"\"{val}\"";
@@ -459,6 +493,14 @@ class Program {
                 }
                 if(i != obj.Count - 1) {
                     output += ", ";
+                }
+                if(prettyPrint) {
+                    output += "\n";
+                }
+            }
+            if(prettyPrint) {
+                for(var j = 0; j < depth; j++) {
+                    output += " ";
                 }
             }
             output += "]";
@@ -485,7 +527,7 @@ class Program {
     {
         var DeserializedObject = DeserializeObjectFromFile("./examples/fullconfig.fc");
         Console.WriteLine("\nFCF:");
-        Console.WriteLine(SerializeObject(DeserializedObject));
+        Console.WriteLine(SerializeObject(DeserializedObject, true));
         Console.WriteLine("\nJSON:");
         Console.WriteLine(SerializeObjectToJson(DeserializedObject));
     }
