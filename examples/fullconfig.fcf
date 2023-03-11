@@ -7,7 +7,7 @@ version = 1.4,
 name = "Game",
 releaseState = ReleaseStates.Release,
 user = [
-    keii = {
+    {
         name = "keii",
         age = 16,
     }

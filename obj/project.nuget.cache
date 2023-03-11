@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "xOHaE7tUj5bQI7+t2JS9CBwDdWn5ZW+ltCBcr9viv+fya/MAXDoNq1lcT7EdCnJLkj+vfmcAHRsPBceddbe0kA==",
+  "dgSpecHash": "tuUjwB3XVpCVQmecEWPyB0YjUAtGwCT2W6DNihB9ME7ZEApzraTf5YMV7QbX5WdPAiBtH+N+HjzuUFwFdKAGWA==",
   "success": true,
-  "projectFilePath": "D:\\Projects2023\\Coding\\C#\\Config\\Config.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/keii/Workspace/C#/fcf/Config.csproj",
+  "expectedPackageFiles": [
+    "/home/keii/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.14/microsoft.aspnetcore.app.ref.6.0.14.nupkg.sha512",
+    "/home/keii/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.14/microsoft.netcore.app.host.linux-x64.6.0.14.nupkg.sha512"
+  ],
   "logs": []
 }

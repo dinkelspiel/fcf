@@ -29,7 +29,11 @@ class TokenString : Token
 
 class TokenNumber : Token
 {
-    public string value;
+    public float value;
+
+    public TokenNumber(float value) {
+        this.value = value;
+    }
 }
 
 class TokenAssign : Token
@@ -62,9 +66,19 @@ class TokenDictEnd : Token
     
 }
 
+class TokenEnumStart : Token
+{
+
+}
+
+class TokenEnumEnd : Token 
+{
+
+}
+
 class Program {
     static void Main(string[] args) {
-        string[] fileContentsArray = File.ReadAllLines("../../../examples/toplevel.cfg");
+        string[] fileContentsArray = File.ReadAllLines("./examples/fullconfig.fcf");
         string fileContents = "";
         foreach(string line in fileContentsArray)
         {
@@ -105,6 +119,18 @@ class Program {
                     stack.Add(new TokenAssign());
                     break;
                 case ',':
+                    if (currentWord != "")
+                    {
+                        float value = 0f;
+                        if(float.TryParse(currentWord, out value)) {
+                            stack.Add(new TokenNumber(value));
+                            currentWord = "";
+                        } else {
+                            stack.Add(new TokenIdentifier(currentWord));
+                            currentWord = "";
+                        }
+                    }
+
                     stack.Add(new TokenComma());
                     break;
                 case '[':
@@ -131,6 +157,19 @@ class Program {
 
                     stack.Add(new TokenDictEnd());
                     break;
+                case '(':
+                    stack.Add(new TokenEnumStart());
+                    break;
+                case ')':
+                    if (currentWord != "")
+                    {
+                        stack.Add(new TokenIdentifier(currentWord));
+                        currentWord = "";
+                    }
+
+                    stack.Add(new TokenEnumEnd());
+                    break;
+
                 default:
                     if (c != '"')
                     {
