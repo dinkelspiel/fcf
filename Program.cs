@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 
 class Token
@@ -77,12 +78,15 @@ class TokenEnumEnd : Token
 }
 
 class Program {
-    static void Main(string[] args) {
-        string[] fileContentsArray = File.ReadAllLines("./examples/fullconfig.fcf");
+    public static Token[] TokenizeFile(string path)
+    {
+        string[] fileContentsArray = File.ReadAllLines(path);
         string fileContents = "";
         foreach(string line in fileContentsArray)
         {
-            fileContents += line.TrimStart().TrimEnd();
+            string line2 = line + "\n";
+            
+            fileContents += line2.TrimStart().TrimEnd();
         }
 
         string newFileContents = "";
@@ -191,16 +195,58 @@ class Program {
             }
         }
 
-        foreach (dynamic c in stack)
+        return stack.ToArray();
+    }
+
+    static Dictionary<String, dynamic> ParseConfig(Token[] stack)
+    {
+        Dictionary<String, dynamic> parsedConfig = new Dictionary<string, dynamic>();
+        List<dynamic> depth = new List<dynamic>();
+
+        int i = -1;
+        foreach (Token t in stack)
         {
-            if (c.GetType() == typeof(TokenIdentifier) || c.GetType() == typeof(TokenString) || c.GetType() == typeof(TokenNumber))
+            i++;
+
+            Console.WriteLine(t);
+
+            if(t.GetType() == typeof(TokenArrayStart))
             {
-                Console.WriteLine(c + " " + c.value);
+                depth.Add("arr");
             }
-            else
+
+            if(t.GetType() == typeof(TokenArrayEnd))
             {
-                Console.WriteLine(c);
+                depth.RemoveAt(depth.Count - 1);
             }
+
+            foreach (var d in depth)
+            {
+                Console.Write(d + ", ");
+            }
+            Console.WriteLine();
         }
+
+        return parsedConfig;
+    }
+
+    static void Main(string[] args)
+    {
+        var stack = TokenizeFile("./examples/array.fcf");
+
+        // foreach (dynamic c in stack)
+        // {
+        //     if (c.GetType() == typeof(TokenIdentifier) || c.GetType() == typeof(TokenString) ||
+        //         c.GetType() == typeof(TokenNumber))
+        //     {
+        //         Console.WriteLine(c + " " + c.value);
+        //     }
+        //     else
+        //     {
+        //         Console.WriteLine(c);
+        //     }
+        // }
+        //
+        var parsedConfig = ParseConfig(stack);
     }
 }

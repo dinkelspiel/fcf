@@ -10,5 +10,18 @@ user = [
     {
         name = "keii",
         age = 16,
+    },
+    {
+        name = "asd",
+        age = 15,
     }
+],
+arr = [
+    [
+        [
+            
+        ],
+        "subarr"
+    ],
+    "control"
 ]
