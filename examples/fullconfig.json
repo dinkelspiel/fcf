@@ -1,0 +1,28 @@
+﻿{
+  "version": 1.4,
+  "name": "Game",
+  "releaseState": "ReleaseStates.Release",
+  "user": [
+    {
+      "name": "keii",
+      "age": 16,
+      "test": true
+    },
+    {
+      "name": "asd",
+      "age": 15,
+      "test": false
+    }
+  ],
+  "arr": [
+    [
+      [],
+      "subarr"
+    ],
+    "control"
+  ],
+  "as": {
+    "dfdf": "1"
+  },
+  "as.dfdf": "2323"
+} 

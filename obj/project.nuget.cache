@@ -1,12 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "3zMozovO4vQtKKbY+Ik4TwVeZkKlIc40jYB6GQSDX6F67UqOKo07WOrQCbU+LIiZ+BU2tn/GDZNKdKGorOnw/A==",
+  "dgSpecHash": "v69bLYDXTRkMmgNPRh6Ho5u6vb7p++t1//i4c5007b+JHuuTf3UI94InOz4gX8rNnL4BreEw0w9WMC7HmGwv3w==",
   "success": true,
-  "projectFilePath": "/home/keii/Workspace/C#/fcf/Config.csproj",
+  "projectFilePath": "D:\\Projects2023\\Coding\\C#\\fcf\\Config.csproj",
   "expectedPackageFiles": [
-    "/home/keii/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
-    "/home/keii/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.14/microsoft.aspnetcore.app.ref.6.0.14.nupkg.sha512",
-    "/home/keii/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.14/microsoft.netcore.app.host.linux-x64.6.0.14.nupkg.sha512"
+    "C:\\Users\\wille\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }
