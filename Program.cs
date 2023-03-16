@@ -483,27 +483,10 @@ class Program {
 
     static void Main(string[] args)
     {
-        var stack = TokenizeFromFile("./examples/fullconfig.fcf");
-
-        var asd = DeserializeObject(stack);
-        // // Console.WriteLine();        
-        // Console.WriteLine(SerializeObject(d));
-        // // Console.WriteLine();
-        // // foreach(var i in d[0]) {
-        // //     Console.WriteLine(i);
-        // // }
-        // Console.WriteLine(d[0]["arr"][1]);
-
-        Console.WriteLine(SerializeObject(asd));
-
-        // Console.WriteLine(asd["user"][0]["name"]);
-
-        // foreach(var d in stack) {
-        //     if(d.GetType() == typeof(TokenString) || d.GetType() == typeof(TokenNumber) || d.GetType() == typeof(TokenBoolean) || d.GetType() == typeof(TokenIdentifier)) {
-        //         Console.WriteLine(d + ": " + ((dynamic)d).value);
-        //     } else {
-        //         Console.WriteLine(d);
-        //     }
-        // }
+        var DeserializedObject = DeserializeObjectFromFile("./examples/fullconfig.fc");
+        Console.WriteLine("\nFCF:");
+        Console.WriteLine(SerializeObject(DeserializedObject));
+        Console.WriteLine("\nJSON:");
+        Console.WriteLine(SerializeObjectToJson(DeserializedObject));
     }
 }
