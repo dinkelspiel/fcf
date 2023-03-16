@@ -261,7 +261,7 @@ class Program {
         return stack.ToArray();
     }
 
-    static dynamic ParseDict(Token[] tokens)
+    static dynamic[] ParseDict(Token[] tokens)
     {
         Dictionary<string, dynamic> json_object = new Dictionary<string, dynamic>();
         var t = tokens[0];
@@ -283,7 +283,7 @@ class Program {
                 Environment.Exit(4);
             }
 
-            var tmp = ParseInternal(tokens.ToList().Skip(1).ToArray());
+            var tmp = Parse(tokens.ToList().Skip(1).ToArray());
             var json_value = tmp[0];
             tokens = tmp[1];
 
@@ -312,7 +312,7 @@ class Program {
         }
     }
 
-    static dynamic ParseArray(Token[] tokens)
+    static dynamic[] ParseArray(Token[] tokens)
     {
         List<dynamic> json_array = new List<dynamic>();
 
@@ -322,7 +322,7 @@ class Program {
         }
 
         while(true) {
-            var tmp = ParseInternal(tokens);
+            var tmp = Parse(tokens);
             var json = tmp[0];
             tokens = tmp[1];
 
@@ -344,7 +344,7 @@ class Program {
         }
     }
 
-    static dynamic ParseInternal(Token[] tokens) {
+    static dynamic[] Parse(Token[] tokens) {
         var t = tokens[0];
 
         // Console.WriteLine("Parsing Array");
@@ -363,59 +363,115 @@ class Program {
         }
     }
 
-    static string SerializeObject(dynamic tokens) {
+    static string SerializeObjectToJson(dynamic obj) {
         string output = "";
-        foreach(dynamic i in tokens) {
-            if(i.GetType() == typeof(Dictionary<string, dynamic>)) {
-                output += ("{ ");
-                foreach(KeyValuePair<string, dynamic> j in (Dictionary<string, dynamic>)i) {
-                    if(j.Value.GetType() == typeof(TokenIdentifier) || j.Value.GetType() == typeof(TokenString) || j.Value.GetType() == typeof(TokenNumber) || j.Value.GetType() == typeof(TokenBoolean)) { 
-                        if(j.Value.GetType() == typeof(TokenString)) {
-                            output += (j.Key + ": \"" + (dynamic)j.Value.value + "\", ");
-                        } else {
-                            output += (j.Key + ": " + j.Value.value + ", ");
-                        }
+
+        int i = -1;
+        if(obj.GetType() == typeof(Dictionary<string, dynamic>)) {
+            output += "{";
+            foreach(KeyValuePair<string, dynamic> kvp in obj) {
+                i++;
+                if(kvp.Value.GetType() == typeof(List<dynamic>) || kvp.Value.GetType() == typeof(Dictionary<string, dynamic>)) {
+                    output += $"\"{kvp.Key}\": {SerializeObjectToJson(kvp.Value)}";
+                } else {
+                    if(kvp.Value.GetType() == typeof(string)) {
+                        output += $"\"{kvp.Key}\": \"{kvp.Value}\"";
+                    } else if(kvp.Value.GetType() == typeof(bool) ){
+                        var boolval = kvp.Value ? "true" : "false";
+                        output += $"\"{kvp.Key}\": {boolval}";
                     } else {
-                        if(j.Value.GetType() == typeof(List<dynamic>)) {
-                            output += (j.Key + ": [" + SerializeObject(j.Value) + "], ");
-                        } else {
-                            output += (j.Key + ": {" + SerializeObject(j.Value) + "}, ");
-                        }
+                        output += $"\"{kvp.Key}\": {kvp.Value}";
                     }
-                    // output += "\n";
                 }
-                output += (" } ");
-            } else if(i.GetType() == typeof(List<dynamic>)) {
-                foreach(dynamic j in i) {
-                    if(j.GetType() == typeof(List<dynamic>)) {
-                        if(j.GetType() == typeof(List<dynamic>)) {
-                            output += "[" + SerializeObject(j) + "], "; 
-                        } else {
-                            output += "{" + SerializeObject(j) + "}, ";
-                        }                    
-                        // output += ", ";
-                    } else {
-                        if(j.GetType() == typeof(TokenString)) {
-                            output += "\"" + j + "\", ";
-                        } else {
-                            output += j + ", ";
-                        }
-                    }
+                if(i != obj.Count - 1) {
+                    output += ", ";
                 }
             }
+            output += "}";
+        } else if(obj.GetType() == typeof(List<dynamic>)) {
+            output += "[";
+            foreach(dynamic val in obj) {
+                i++;
+                if(val.GetType() == typeof(List<dynamic>) || val.GetType() == typeof(Dictionary<string, dynamic>)) {
+                    output += $"{SerializeObjectToJson(val)}";
+                } else {
+                    if(val.GetType() == typeof(string)) {
+                        output += $"\"{val}\"";
+                    } else if(val.GetType() == typeof(bool) ){
+                        output += val ? "true" : "false";
+                    } else {
+                        output += val;
+                    }
+                }
+                if(i != obj.Count - 1) {
+                    output += ", ";
+                }
+            }
+            output += "]";
         }
-        return output;
-    }
 
-    static dynamic Parse(Token[] tokens) {
-        return ParseInternal(tokens)[0];
+        return output;
+    } 
+
+    static string SerializeObject(dynamic obj) {
+        string output = "";
+
+        int i = -1;
+        if(obj.GetType() == typeof(Dictionary<string, dynamic>)) {
+            output += "{";
+            foreach(KeyValuePair<string, dynamic> kvp in obj) {
+                i++;
+                if(kvp.Value.GetType() == typeof(List<dynamic>) || kvp.Value.GetType() == typeof(Dictionary<string, dynamic>)) {
+                    output += $"{kvp.Key} = {SerializeObject(kvp.Value)}";
+                } else {
+                    if(kvp.Value.GetType() == typeof(string)) {
+                        output += $"{kvp.Key} = \"{kvp.Value}\"";
+                    } else if(kvp.Value.GetType() == typeof(bool) ){
+                        var boolval = kvp.Value ? "true" : "false";
+                        output += $"{kvp.Key} = {boolval}";
+                    } else {
+                        output += $"{kvp.Key} = {kvp.Value}";
+                    }
+                }
+                if(i != obj.Count - 1) {
+                    output += ", ";
+                }
+            }
+            output += "}";
+        } else if(obj.GetType() == typeof(List<dynamic>)) {
+            output += "[";
+            foreach(dynamic val in obj) {
+                i++;
+                if(val.GetType() == typeof(List<dynamic>) || val.GetType() == typeof(Dictionary<string, dynamic>)) {
+                    output += $"{SerializeObject(val)}";
+                } else {
+                    if(val.GetType() == typeof(string)) {
+                        output += $"\"{val}\"";
+                    } else if(val.GetType() == typeof(bool) ){
+                        output += val ? "true" : "false";
+                    } else {
+                        output += val;
+                    }
+                }
+                if(i != obj.Count - 1) {
+                    output += ", ";
+                }
+            }
+            output += "]";
+        }
+
+        return output;
+    } 
+
+    static dynamic DeserializeObject(Token[] tokens) {
+        return Parse(tokens)[0];
     }
 
     static void Main(string[] args)
     {
         var stack = TokenizeFile("./examples/fullconfig.fcf");
 
-        var d = Parse(stack);
+        var asd = DeserializeObject(stack);
         // // Console.WriteLine();        
         // Console.WriteLine(SerializeObject(d));
         // // Console.WriteLine();
@@ -423,7 +479,10 @@ class Program {
         // //     Console.WriteLine(i);
         // // }
         // Console.WriteLine(d[0]["arr"][1]);
-        Console.WriteLine(d["user"][0]["name"]);
+
+        Console.WriteLine(SerializeObject(asd));
+
+        // Console.WriteLine(asd["user"][0]["name"]);
 
         // foreach(var d in stack) {
         //     if(d.GetType() == typeof(TokenString) || d.GetType() == typeof(TokenNumber) || d.GetType() == typeof(TokenBoolean) || d.GetType() == typeof(TokenIdentifier)) {
@@ -432,6 +491,5 @@ class Program {
         //         Console.WriteLine(d);
         //     }
         // }
-        
     }
 }
