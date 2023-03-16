@@ -283,7 +283,7 @@ class Program {
                 Environment.Exit(4);
             }
 
-            var tmp = Parse(tokens.ToList().Skip(1).ToArray());
+            var tmp = ParseInternal(tokens.ToList().Skip(1).ToArray());
             var json_value = tmp[0];
             tokens = tmp[1];
 
@@ -292,8 +292,14 @@ class Program {
                 Environment.Exit(4);
             }
 
-            json_object.Add((string)(((TokenIdentifier)json_key).value), json_value);
+            // json_object.Add((string)(((TokenIdentifier)json_key).value), json_value);
 
+            if(json_value.GetType() == typeof(TokenString) || json_value.GetType() == typeof(TokenNumber) || json_value.GetType() == typeof(TokenBoolean) || json_value.GetType() == typeof(TokenIdentifier)) {
+                json_object.Add((string)(((TokenIdentifier)json_key).value), ((dynamic)json_value).value);
+            } else {
+                json_object.Add((string)(((TokenIdentifier)json_key).value), json_value);
+            }
+            
             t = tokens[0];
             if(t.GetType() == typeof(TokenDictEnd)) {
                 return new dynamic[] {json_object, tokens.ToList().Skip(1).ToArray()};
@@ -316,7 +322,7 @@ class Program {
         }
 
         while(true) {
-            var tmp = Parse(tokens);
+            var tmp = ParseInternal(tokens);
             var json = tmp[0];
             tokens = tmp[1];
 
@@ -338,7 +344,7 @@ class Program {
         }
     }
 
-    static dynamic Parse(Token[] tokens) {
+    static dynamic ParseInternal(Token[] tokens) {
         var t = tokens[0];
 
         // Console.WriteLine("Parsing Array");
@@ -401,11 +407,15 @@ class Program {
         return output;
     }
 
+    static dynamic Parse(Token[] tokens) {
+        return ParseInternal(tokens)[0];
+    }
+
     static void Main(string[] args)
     {
         var stack = TokenizeFile("./examples/fullconfig.fcf");
 
-        // var d = Parse(stack);
+        var d = Parse(stack);
         // // Console.WriteLine();        
         // Console.WriteLine(SerializeObject(d));
         // // Console.WriteLine();
@@ -413,14 +423,15 @@ class Program {
         // //     Console.WriteLine(i);
         // // }
         // Console.WriteLine(d[0]["arr"][1]);
+        Console.WriteLine(d["user"][0]["name"]);
 
-        foreach(var d in stack) {
-            if(d.GetType() == typeof(TokenString) || d.GetType() == typeof(TokenNumber) || d.GetType() == typeof(TokenBoolean) || d.GetType() == typeof(TokenIdentifier)) {
-                Console.WriteLine(d + ": " + ((dynamic)d).value);
-            } else {
-                Console.WriteLine(d);
-            }
-        }
+        // foreach(var d in stack) {
+        //     if(d.GetType() == typeof(TokenString) || d.GetType() == typeof(TokenNumber) || d.GetType() == typeof(TokenBoolean) || d.GetType() == typeof(TokenIdentifier)) {
+        //         Console.WriteLine(d + ": " + ((dynamic)d).value);
+        //     } else {
+        //         Console.WriteLine(d);
+        //     }
+        // }
         
     }
 }
