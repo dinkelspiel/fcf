@@ -11,15 +11,15 @@ Dictionary<string, dynamic> deserializedObject = DeserializeObjectFromFile($file
 ### Deserialize from memory
 
 ```c#
-string memory = @"
+string memory = """
 version = 1.4,
 name = FCF,
 buildOptions = [
-    \"release\",
-    \"beta\",
-    \"alpha\"
+    "Release",
+    "Beta",
+    "Alpha"
 ]
-";
+""";
 
 Dictionary<string, dynamic> deserializedObject = DeserializeObjectFromMemory(memory);
 ```
