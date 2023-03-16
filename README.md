@@ -2,9 +2,26 @@
 
 ## How to use
 
+### Deserialize from file
+
 ```c#
-Token[] tokens = TokenizeFile($filePath);
-Dictionary<string, dynamic> SerializedObject = SerializeObject(tokens);
+Dictionary<string, dynamic> deserializedObject = DeserializeObjectFromFile($filePath);
+```
+
+### Deserialize from memory
+
+```c#
+string memory = @"
+version = 1.4,
+name = FCF,
+buildOptions = [
+    \"release\",
+    \"beta\",
+    \"alpha\"
+]
+";
+
+Dictionary<string, dynamic> deserializedObject = DeserializeObjectFromMemory(memory);
 ```
 
 ## JSON Comparison
@@ -42,6 +59,6 @@ persons = [
 ```
 
 Differences:
-- Implied top level object eg. no need to surround object in curly braces "{}"
+- Implied top level object eg. no need to surround top level object in curly braces "{}"
 - Names are identifiers not strings to have a clear distinction
-- Usage of equals "=" instead of colon ":" to more clearly designate a assign operation
+- Usage of equals "=" instead of colon ":" to more clearly designate an assign operation

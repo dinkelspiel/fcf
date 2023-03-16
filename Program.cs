@@ -86,8 +86,7 @@ class TokenEnumEnd : Token
 }
 
 class Program {
-    public static Token[] TokenizeFile(string path)
-    {
+    public static Token[] TokenizeFromFile(string path) {
         string[] fileContentsArray = File.ReadAllLines(path);
         string fileContents = "";
         foreach(string line in fileContentsArray)
@@ -115,12 +114,17 @@ class Program {
             newFileContents += c;
         }
 
-        fileContents = "{" +  newFileContents  + "}";
+        return TokenizeFromMemory(newFileContents);
+    }
+
+    public static Token[] TokenizeFromMemory(string fileContents)
+    {
+        fileContents = "{" + fileContents + "}";
 
         List<Token> stack = new List<Token>();
         
         string currentWord = "";
-        isString = false;
+        bool isString = false;
         
         var boolvalues = new String[2]{"true", "false"};
 
@@ -467,9 +471,19 @@ class Program {
         return Parse(tokens)[0];
     }
 
+    static dynamic DeserializeObjectFromFile(string filePath) {
+        var stack = TokenizeFromFile(filePath);
+        return DeserializeObject(stack);
+    }
+
+    static dynamic DeserializeObjectFromMemory(string memory) {
+        var stack = TokenizeFromMemory(memory);
+        return DeserializeObject(stack);
+    }
+
     static void Main(string[] args)
     {
-        var stack = TokenizeFile("./examples/fullconfig.fcf");
+        var stack = TokenizeFromFile("./examples/fullconfig.fcf");
 
         var asd = DeserializeObject(stack);
         // // Console.WriteLine();        
