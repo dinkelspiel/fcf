@@ -1,19 +1,16 @@
-releaseStates = (
-    Release,
-    PreRelease,
-    Alpha
-),
-version = 1.4,
+version = 1.4,  
 name = "Game",
-releaseState = ReleaseStates.Release,
+releaseState = "ReleaseStates.Release", // test
 user = [
     {
         name = "keii",
         age = 16,
+        test = true
     },
     {
         name = "asd",
         age = 15,
+        test = false
     }
 ],
 arr = [
@@ -24,4 +21,9 @@ arr = [
         "subarr"
     ],
     "control"
-]
+],
+
+as = {
+    dfdf = "1"
+},
+as.dfdf = "2323"

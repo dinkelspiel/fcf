@@ -1,16 +1,21 @@
-﻿arr = [
-    {
-        dictarr = [
-            [
-                "dictarr2"
-            ]   
-        ]
-    },
-    [
+﻿{
+    arr = [
+        {
+            dictarr = [
+                [
+                    "dictarr2"
+                ]   
+            ]
+        }
         [
-            "arr3"
-        ],
-        "arr2"
-    ],
-    "arr1"
-]
+            [
+                "arr3"
+            ]
+            "arr2"
+        ]
+        [
+            "arr4"
+        ]
+        "arr1"
+    ]
+}
