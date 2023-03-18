@@ -1,2 +1,0 @@
-D:\Projects2023\Coding\C#\fcf\bin\Release\net6.0\win-x64\publish\Config.pdb
-D:\Projects2023\Coding\C#\fcf\bin\Release\net6.0\win-x64\publish\Config.exe
