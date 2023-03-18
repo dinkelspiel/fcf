@@ -5,12 +5,16 @@
 ### Deserialize from file
 
 ```c#
-Dictionary<string, dynamic> deserializedObject = DeserializeObjectFromFile($filePath);
+using static FjordConfigFormat.FCF;
+
+Dictionary<string, dynamic> deserializedObject = FCF.DeserializeObjectFromFile($filePath);
 ```
 
 ### Deserialize from memory
 
 ```c#
+using static FjordConfigFormat.FCF;
+
 string memory = """
 version = 1.4,
 name = FCF,
@@ -21,7 +25,7 @@ buildOptions = [
 ]
 """;
 
-Dictionary<string, dynamic> deserializedObject = DeserializeObjectFromMemory(memory);
+Dictionary<string, dynamic> deserializedObject = FCF.DeserializeObjectFromMemory(memory);
 ```
 
 ## JSON Comparison
