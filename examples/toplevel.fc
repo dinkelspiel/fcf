@@ -3,7 +3,7 @@ age = 16,
 guns = [
     {
        test = "wasd",
-       asd = "test",
+       asd = "test"
     },
     "Rifle"
 ],

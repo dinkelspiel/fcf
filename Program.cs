@@ -73,7 +73,7 @@ class Program {
 
                 try
                 {
-                    FCF.DeserializeObjectFromFile("./examples/fullconfig.fc");
+                    FCF.DeserializeObjectFromFile(args[1]);
                     Console.WriteLine("File is valid!");
                 }
                 catch(InvalidTokenTypeException e)

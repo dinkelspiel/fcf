@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "TIyGtgMTSOvG2WZ+89eMobihvy10WMT9chy1h79IIjO23wqOqSW2tL3i5wlCr/WRfSsXEbXjow8ab/xN8PjKmg==",
+  "dgSpecHash": "/1v+TqLZWpPAXbq03w0UuR/PGVz77XGCP2yXOYuWNiXKGkI++fLdImW56sorG/uv8w0J2PV9kE4nNwTe4uaL9Q==",
   "success": true,
   "projectFilePath": "D:\\Projects2023\\Coding\\C#\\fcf\\Config.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\wille\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\wille\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\wille\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.15\\microsoft.netcore.app.runtime.win-x64.6.0.15.nupkg.sha512",
+    "C:\\Users\\wille\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.15\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.15.nupkg.sha512",
+    "C:\\Users\\wille\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.15\\microsoft.aspnetcore.app.runtime.win-x64.6.0.15.nupkg.sha512"
   ],
   "logs": []
 }
