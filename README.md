@@ -1,68 +1,37 @@
-# Fjord Config Format
+# FCF CLI
 
-## How to use
+## Usage
 
-### Deserialize from file
-
-```c#
-using fcflib;
-
-Dictionary<string, dynamic> deserializedObject = FCF.DeserializeObjectFromFile($filePath);
-```
-
-### Deserialize from memory
-
-```c#
-using fcflib;
-
-string memory = """
-version = 1.4,
-name = FCF,
-buildOptions = [
-    "Release",
-    "Beta",
-    "Alpha"
-]
-""";
-
-Dictionary<string, dynamic> deserializedObject = FCF.DeserializeObjectFromMemory(memory);
-```
-
-## JSON Comparison
-
-```json
-{
-    "persons": [
-        {
-            "name": "keii",
-            "age": 16,
-            "alive": true
-        },
-        {
-            "name": "keii2",
-            "age": 17,
-            "alive": false
-        }
-    ]
-}
-```
+### Validate file
 
 ```
-persons = [
-    {
-        name = "keii",
-        age = 16,
-        alive = true
-    },
-    {
-        name = "keii2",
-        age = 17,
-        alive = false
-    }
-]
+fcf validate ./examples/fullconfig.fc
 ```
 
-Differences:
-- Implied top level object eg. no need to surround top level object in curly braces "{}"
-- Names are identifiers not strings to have a clear distinction
-- Usage of equals "=" instead of colon ":" to more clearly designate an assign operation
+### .fcf file to JSON
+
+```
+fcf jsonify ./examples/fullconfig.fc
+```
+
+### .fcf file to FCF
+
+*Mostly for testing purposes*
+
+```
+fcf parse ./examples/fullconfig.fc
+```
+
+### Run tests
+
+This command parses the files in ./tests and compares them to the _result files to see if they match.
+
+```
+fcf test
+```
+
+## Build 
+
+```
+dotnet build
+```
