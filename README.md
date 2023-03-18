@@ -5,7 +5,7 @@
 ### Deserialize from file
 
 ```c#
-using static FjordConfigFormat.FCF;
+using fcflib;
 
 Dictionary<string, dynamic> deserializedObject = FCF.DeserializeObjectFromFile($filePath);
 ```
@@ -13,7 +13,7 @@ Dictionary<string, dynamic> deserializedObject = FCF.DeserializeObjectFromFile($
 ### Deserialize from memory
 
 ```c#
-using static FjordConfigFormat.FCF;
+using fcflib;
 
 string memory = """
 version = 1.4,

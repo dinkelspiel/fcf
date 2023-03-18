@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using static FjordConfigFormat.FCF;
+using fcflib;
 using Newtonsoft.Json;
-using FjordConfigFormat;
 
 namespace Config;
 
@@ -36,7 +35,7 @@ class Program {
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write($"Test {i} '{test}': ");
-                    if (SerializeObject(d) != resultFCF)
+                    if (FCF.SerializeObject(d) != resultFCF)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"FCF Failed");
@@ -49,7 +48,7 @@ class Program {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(", ");
 
-                    if (SerializeObjectToJson(d) != resultJSON)
+                    if (FCF.SerializeObjectToJson(d) != resultJSON)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"JSON Failed");
@@ -93,7 +92,7 @@ class Program {
                 try
                 {
                     var d = FCF.DeserializeObjectFromFile(args[1]);
-                    Console.WriteLine(SerializeObjectToJson(d));
+                    Console.WriteLine(FCF.SerializeObjectToJson(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
@@ -111,8 +110,8 @@ class Program {
 
                 try
                 {
-                    var d = DeserializeObjectFromFile(args[1]);
-                    Console.WriteLine(SerializeObject(d));
+                    var d = FCF.DeserializeObjectFromFile(args[1]);
+                    Console.WriteLine(FCF.SerializeObject(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
