@@ -483,7 +483,7 @@ class Program {
 
     static void Main(string[] args)
     {
-        var DeserializedObject = DeserializeObjectFromFile("../../../examples/fullconfig.fc");
+        var DeserializedObject = DeserializeObjectFromFile("./examples/fullconfig.fc");
         Console.WriteLine("\nFCF:");
         Console.WriteLine(SerializeObject(DeserializedObject));
         Console.WriteLine("\nJSON:");
