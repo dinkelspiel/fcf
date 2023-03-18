@@ -55,29 +55,31 @@
     ]
   },
   "packageFolders": {
-    "/home/keii/.nuget/packages/": {},
-    "/home/keii/.local/share/godot/mono/GodotNuGetFallbackFolder": {}
+    "C:\\Users\\wille\\.nuget\\packages\\": {},
+    "C:\\Users\\wille\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/keii/Workspace/C#/fcf/Config.csproj",
+      "projectUniqueName": "D:\\Projects2023\\Coding\\C#\\fcf\\Config.csproj",
       "projectName": "Config",
-      "projectPath": "/home/keii/Workspace/C#/fcf/Config.csproj",
-      "packagesPath": "/home/keii/.nuget/packages/",
-      "outputPath": "/home/keii/Workspace/C#/fcf/obj/",
+      "projectPath": "D:\\Projects2023\\Coding\\C#\\fcf\\Config.csproj",
+      "packagesPath": "C:\\Users\\wille\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects2023\\Coding\\C#\\fcf\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/home/keii/.local/share/godot/mono/GodotNuGetFallbackFolder"
+        "C:\\Users\\wille\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/keii/.nuget/NuGet/NuGet.Config",
-        "/home/keii/.nuget/NuGet/config/Godot.Offline.Config"
+        "C:\\Users\\wille\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\wille\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -112,22 +114,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.14, 6.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.linux-x64",
-            "version": "[6.0.14, 6.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

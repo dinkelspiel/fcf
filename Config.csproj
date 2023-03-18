@@ -11,4 +11,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties tests_4simple_3result_1fcf__JsonSchema="{&quot;name&quot;: &quot;Fjord&quot;, &quot;version&quot;: 1.4}" /></VisualStudio></ProjectExtensions>
+
 </Project>
