@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
   </PropertyGroup>
   
   <ProjectExtensions><VisualStudio><UserProperties tests_4simple_3result_1fcf__JsonSchema="{&quot;name&quot;: &quot;Fjord&quot;, &quot;version&quot;: 1.4}" /></VisualStudio></ProjectExtensions>
