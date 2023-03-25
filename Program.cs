@@ -16,6 +16,15 @@ class Program {
 
         switch(args[0].ToLower())
         {
+            case "color":
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Test");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("asd");
+                Console.WriteLine();
+                
+
+                break;
             case "test":
                 string subPath = "tests/";
                 List<string> tests = new List<string>();
@@ -78,7 +87,7 @@ class Program {
                 {
                     Console.WriteLine("File is invalid!");
                     Console.WriteLine("Error: InvalidTokenTypeException");
-                    Console.WriteLine("Message: " + e.Message);
+                    Console.WriteLine("Message: " + e.token);
                 }
                 break;
             case "jsonify":
@@ -110,13 +119,75 @@ class Program {
                 try
                 {
                     var d = FCF.DeserializeObjectFromFile(args[1]);
+
                     Console.WriteLine(FCF.SerializeObject(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
-                    Console.WriteLine("File is invalid!");
-                    Console.WriteLine("Error: InvalidTokenTypeException");
-                    Console.WriteLine("Message: " + e.Message);
+                    string[] filearr = FCF.SterilizeStringArray(File.ReadAllLines(args[1]));
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("error");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(": " + e.Message);
+                    Console.WriteLine();
+
+
+
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(e.token.lineStart);
+                    Console.Write(" | ");
+
+                    foreach(var j in filearr[e.token.lineStart - 1]) {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(j);
+                    }
+                    Console.WriteLine();
+
+
+
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(e.token.lineStart + 1);
+                    Console.Write(" | ");
+
+                    int jIndex = -1;
+                    foreach(var j in filearr[e.token.lineStart]) {
+                        jIndex ++;
+                        if(jIndex >= e.token.charStart && jIndex < e.token.charEnd) {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        } else {
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                        }
+                        Console.Write(j);
+                    }
+                    Console.WriteLine();
+                    
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    for(var j = 0; j < e.token.lineStart.ToString().Length; j++) {
+                        Console.Write(" ");
+                    }
+                    Console.Write(" | ");
+
+                    for(int j = 0; j < e.token.charStart; j++) {
+                        Console.Write(" ");
+                    }
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    for(var j = 0; j < e.token.charEnd - e.token.charStart; j++) {
+                        Console.Write("^");
+                    }
+                    Console.WriteLine();
+
+
+
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(e.token.lineStart + 2);
+                    Console.Write(" | ");
+
+                    foreach(var j in filearr[e.token.lineStart + 1]) {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(j);
+                    }
+                    Console.WriteLine();
                 }
                 break;
             default:
