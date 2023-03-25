@@ -1,6 +1,6 @@
 version = 1.4,
 name = "Game",
-releaseState = ] "ReleaseStates.Release", // test
+releaseState = "ReleaseStates.Release", // test
 user = [
     {
         name = "keii",
