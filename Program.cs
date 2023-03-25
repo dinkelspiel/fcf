@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using libfcf;
 
-namespace Config;
+namespace FCF;
 
 class Program {
     static void PrintError(InvalidTokenTypeException e, string sourceFilePath) {
-        string[] filearr = FCF.SterilizeStringArray(File.ReadAllLines(sourceFilePath));
+        string[] filearr = LibFCF.SterilizeStringArray(File.ReadAllLines(sourceFilePath));
 
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("error");
@@ -111,13 +111,13 @@ class Program {
                 {
                     i++;
 
-                    var d = FCF.DeserializeObjectFromFile(subPath + test + ".fcf");
+                    var d = LibFCF.DeserializeObjectFromFile(subPath + test + ".fcf");
                     string resultJSON = File.ReadAllText(subPath + test + "_result.json");
                     string resultFCF = File.ReadAllText(subPath + test + "_result.fcf");
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write($"Test {i} '{test}': ");
-                    if (FCF.SerializeObject(d) != resultFCF)
+                    if (LibFCF.SerializeObject(d) != resultFCF)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"FCF Failed");
@@ -125,7 +125,7 @@ class Program {
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine();
                             Console.WriteLine("Got:");
-                            Console.WriteLine(FCF.SerializeObject(d));
+                            Console.WriteLine(LibFCF.SerializeObject(d));
                             Console.WriteLine("Expected:");
                             Console.WriteLine(resultFCF);
                         }
@@ -138,7 +138,7 @@ class Program {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(", ");
 
-                    if (FCF.SerializeObjectToJson(d) != resultJSON)
+                    if (LibFCF.SerializeObjectToJson(d) != resultJSON)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"JSON Failed");
@@ -146,7 +146,7 @@ class Program {
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine();
                             Console.WriteLine("Got:");
-                            Console.WriteLine(FCF.SerializeObjectToJson(d));
+                            Console.WriteLine(LibFCF.SerializeObjectToJson(d));
                             Console.WriteLine("Expected:");
                             Console.WriteLine(resultJSON);
                         }
@@ -170,7 +170,7 @@ class Program {
 
                 try
                 {
-                    FCF.DeserializeObjectFromFile(args[1]);
+                    LibFCF.DeserializeObjectFromFile(args[1]);
                     Console.WriteLine("File is valid!");
                 }
                 catch(InvalidTokenTypeException e)
@@ -187,8 +187,8 @@ class Program {
 
                 try
                 {
-                    var d = FCF.DeserializeObjectFromFile(args[1]);
-                    Console.WriteLine(FCF.SerializeObjectToJson(d));
+                    var d = LibFCF.DeserializeObjectFromFile(args[1]);
+                    Console.WriteLine(LibFCF.SerializeObjectToJson(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
@@ -204,9 +204,9 @@ class Program {
 
                 try
                 {
-                    var d = FCF.DeserializeObjectFromFile(args[1]);
+                    var d = LibFCF.DeserializeObjectFromFile(args[1]);
 
-                    Console.WriteLine(FCF.SerializeObject(d));
+                    Console.WriteLine(LibFCF.SerializeObject(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
