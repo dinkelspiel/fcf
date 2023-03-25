@@ -99,6 +99,13 @@ class Program {
                 tests.Add("simple");
                 tests.Add("simplecondensed");
 
+                bool verbose = false;
+                if(args.Length >= 2) {
+                    if(args[1] == "verbose") {
+                        verbose = true;
+                    }
+                }
+
                 int i = 0;
                 foreach(string test in tests)
                 {
@@ -114,6 +121,14 @@ class Program {
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"FCF Failed");
+                        if(verbose) {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine();
+                            Console.WriteLine("Got:");
+                            Console.WriteLine(FCF.SerializeObject(d));
+                            Console.WriteLine("Expected:");
+                            Console.WriteLine(resultFCF);
+                        }
                     } else
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
@@ -127,6 +142,14 @@ class Program {
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"JSON Failed");
+                        if(verbose) {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine();
+                            Console.WriteLine("Got:");
+                            Console.WriteLine(FCF.SerializeObjectToJson(d));
+                            Console.WriteLine("Expected:");
+                            Console.WriteLine(resultJSON);
+                        }
                     }
                     else
                     {
