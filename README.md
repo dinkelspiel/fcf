@@ -8,18 +8,24 @@
 fcf validate ./examples/fullconfig.fc
 ```
 
-### .fcf file to JSON
+### .fcfcf file to JSON
 
 ```
 fcf jsonify ./examples/fullconfig.fc
 ```
 
-### .fcf file to FCF
+### .fc file to FCF
 
 *Mostly for testing purposes*
 
 ```
 fcf parse ./examples/fullconfig.fc
+```
+
+### Parse tokens for FCF file
+
+```
+fcf tokenize ./examples/fullconfig.fc
 ```
 
 ### Run tests
