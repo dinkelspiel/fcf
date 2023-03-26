@@ -1,0 +1,6 @@
+0 libfcf.TokenDictStart '{'
+1 libfcf.TokenIdentifier 'name'
+2 libfcf.TokenAssign '='
+3 libfcf.TokenIdentifier 'willem'
+4 libfcf.TokenString "dinkelspiel"
+5 libfcf.TokenDictEnd '}'

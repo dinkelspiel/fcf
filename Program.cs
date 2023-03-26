@@ -7,7 +7,7 @@ namespace FCF;
 
 class Program {
     static void PrintError(InvalidTokenTypeException e, string sourceFilePath) {
-        string[] filearr = LibFCF.SterilizeStringArray(File.ReadAllLines(sourceFilePath));
+        string[] filearr = File.ReadAllLines(sourceFilePath);
 
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("error");
@@ -83,21 +83,13 @@ class Program {
 
         switch(args[0].ToLower())
         {
-            case "color":
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("Test");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("asd");
-                Console.WriteLine();
-                
-
-                break;
             case "test":
                 string subPath = "tests/";
-                List<string> tests = new List<string>();
+                string categoryPath = "serializer/";
+                List<string> serializeTests = new List<string>();
 
-                tests.Add("simple");
-                tests.Add("simplecondensed");
+                serializeTests.Add("simple");
+                serializeTests.Add("simplecondensed");
 
                 bool verbose = false;
                 if(args.Length >= 2) {
@@ -106,18 +98,21 @@ class Program {
                     }
                 }
 
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Serializer Tests");
+
                 int i = 0;
-                foreach(string test in tests)
+                foreach(string test in serializeTests)
                 {
                     i++;
 
-                    var d = LibFCF.DeserializeObjectFromFile(subPath + test + ".fcf");
-                    string resultJSON = File.ReadAllText(subPath + test + "_result.json");
-                    string resultFCF = File.ReadAllText(subPath + test + "_result.fcf");
+                    var d = Parser.DeserializeObjectFromFile(subPath + categoryPath + test + ".fcf");
+                    string resultJSON = File.ReadAllText(subPath + categoryPath + test + "_result.json");
+                    string resultFCF = File.ReadAllText(subPath + categoryPath + test + "_result.fcf");
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write($"Test {i} '{test}': ");
-                    if (LibFCF.SerializeObject(d) != resultFCF)
+                    if (Parser.SerializeObject(d) != resultFCF)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"FCF Failed");
@@ -125,7 +120,7 @@ class Program {
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine();
                             Console.WriteLine("Got:");
-                            Console.WriteLine(LibFCF.SerializeObject(d));
+                            Console.WriteLine(Parser.SerializeObject(d));
                             Console.WriteLine("Expected:");
                             Console.WriteLine(resultFCF);
                         }
@@ -138,7 +133,7 @@ class Program {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(", ");
 
-                    if (LibFCF.SerializeObjectToJson(d) != resultJSON)
+                    if (Parser.SerializeObjectToJson(d) != resultJSON)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"JSON Failed");
@@ -146,7 +141,7 @@ class Program {
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine();
                             Console.WriteLine("Got:");
-                            Console.WriteLine(LibFCF.SerializeObjectToJson(d));
+                            Console.WriteLine(Parser.SerializeObjectToJson(d));
                             Console.WriteLine("Expected:");
                             Console.WriteLine(resultJSON);
                         }
@@ -157,6 +152,72 @@ class Program {
                         Console.Write($"JSON Succeeded");
                     }
                     Console.WriteLine();
+                }
+
+                categoryPath = "tokenizer/";
+                List<string> tokenizerTest = new List<string>();
+
+                tokenizerTest.Add("fullconfig");
+                tokenizerTest.Add("doubleid");
+                tokenizerTest.Add("idstring");
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\nTokenizer Tests");
+
+                i = 0;
+                foreach(string test in tokenizerTest) {
+                    i++;
+                    Token[] tokens = Tokenizer.TokenizeFromFile(subPath + categoryPath + test + ".fc");
+                    string[] expected = File.ReadAllLines(subPath + categoryPath + test + ".txt");
+
+                    List<KeyValuePair<string, string>> problems = new List<KeyValuePair<string, string>>();
+
+                    int tokenIdx = -1;
+                    foreach(var token in tokens) {
+                        tokenIdx++;
+
+                        string output = "";
+                        if(token.GetType() == typeof(TokenString)) {
+                            TokenString t = (TokenString)token; 
+                            output += $"{tokenIdx} {token} \"{t.value}\"";
+                        } else {
+                            dynamic t = (dynamic)token;
+                            output += $"{tokenIdx} {token} '{t.value}'";
+                        }
+
+                        bool problem = false;
+                        if(tokenIdx < expected.Length) {
+                            if(output != expected[tokenIdx]) {
+                                problems.Add(new KeyValuePair<string, string>(output, expected[tokenIdx]));
+                                problem = true;
+                            }
+                        }
+
+                        if(verbose) {
+                            if(problem) {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                            } else {
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            Console.WriteLine(output);
+                        }
+                    }
+                    
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($"Test {i} '{test}': ");
+                    if(problems.Count > 0) {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Failed");
+                        foreach(KeyValuePair<string, string> p in problems) {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"  Got:      {p.Key}");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"  Expected: {p.Value}");
+                        }
+                    } else {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Succeeded");
+                    }
                 }
 
 
@@ -170,7 +231,7 @@ class Program {
 
                 try
                 {
-                    LibFCF.DeserializeObjectFromFile(args[1]);
+                    Parser.DeserializeObjectFromFile(args[1]);
                     Console.WriteLine("File is valid!");
                 }
                 catch(InvalidTokenTypeException e)
@@ -187,8 +248,8 @@ class Program {
 
                 try
                 {
-                    var d = LibFCF.DeserializeObjectFromFile(args[1]);
-                    Console.WriteLine(LibFCF.SerializeObjectToJson(d));
+                    var d = Parser.DeserializeObjectFromFile(args[1]);
+                    Console.WriteLine(Parser.SerializeObjectToJson(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
@@ -204,13 +265,36 @@ class Program {
 
                 try
                 {
-                    var d = LibFCF.DeserializeObjectFromFile(args[1]);
+                    var d = Parser.DeserializeObjectFromFile(args[1]);
 
-                    Console.WriteLine(LibFCF.SerializeObject(d));
+                    Console.WriteLine(Parser.SerializeObject(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
                     PrintError(e, args[1]);
+                }
+                break;
+            case "tokenize":
+                if (args.Length < 2)
+                {
+                    Console.WriteLine("'tokenize' requries a filepath attached");
+                    return;
+                }
+
+                Token[] ts = Tokenizer.TokenizeFromFile(args[1]);
+
+                int tIdx = -1;
+                foreach(Token token in ts) {
+                    tIdx ++;
+                    string output = "";
+                    if(token.GetType() == typeof(TokenString)) {
+                        TokenString t = (TokenString)token; 
+                        output += $"{tIdx} {token} \"{t.value}\"";
+                    } else {
+                        dynamic t = (dynamic)token;
+                        output += $"{tIdx} {token} '{t.value}'";
+                    }
+                    Console.WriteLine(output);
                 }
                 break;
             default:
