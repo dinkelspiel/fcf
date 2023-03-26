@@ -106,9 +106,9 @@ class Program {
                 {
                     i++;
 
-                    var d = Parser.DeserializeObjectFromFile(subPath + categoryPath + test + ".fcf");
+                    var d = Parser.DeserializeObjectFromFile(subPath + categoryPath + test + ".fc");
                     string resultJSON = File.ReadAllText(subPath + categoryPath + test + "_result.json");
-                    string resultFCF = File.ReadAllText(subPath + categoryPath + test + "_result.fcf");
+                    string resultFCF = File.ReadAllText(subPath + categoryPath + test + "_result.fc");
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write($"Test {i} '{test}': ");
