@@ -12,7 +12,7 @@ class Program {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("error");
         Console.ForegroundColor = ConsoleColor.White;
-        Console.Write(": " + e.Message);
+        Console.Write($": {e.Message}");
         Console.WriteLine();
 
 
