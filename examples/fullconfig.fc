@@ -8,7 +8,7 @@ user = [
         test   =    true
     },
     {
-        name = = "asd",
+        name = "asd",
         age = 15,
         test = false
     }
