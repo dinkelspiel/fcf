@@ -17,17 +17,17 @@ class Program {
 
 
 
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write(e.token.lineStart);
-        Console.Write(" | ");
+        if(e.token.lineStart > 0) {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(e.token.lineStart);
+            Console.Write(" | ");
 
-        foreach(var j in filearr[e.token.lineStart - 1]) {
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write(j);
+            foreach(var j in filearr[e.token.lineStart - 1]) {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write(j);
+            }
+            Console.WriteLine();
         }
-        Console.WriteLine();
-
-
 
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.Write(e.token.lineStart + 1);
@@ -112,7 +112,7 @@ class Program {
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write($"Test {i} '{test}': ");
-                    if (Parser.SerializeObject(d) != resultFCF)
+                    if (Serializer.SerializeObject(d) != resultFCF)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"FCF Failed");
@@ -120,7 +120,7 @@ class Program {
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine();
                             Console.WriteLine("Got:");
-                            Console.WriteLine(Parser.SerializeObject(d));
+                            Console.WriteLine(Serializer.SerializeObject(d));
                             Console.WriteLine("Expected:");
                             Console.WriteLine(resultFCF);
                         }
@@ -133,7 +133,7 @@ class Program {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(", ");
 
-                    if (Parser.SerializeObjectToJson(d) != resultJSON)
+                    if (Serializer.SerializeObjectToJson(d) != resultJSON)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write($"JSON Failed");
@@ -141,7 +141,7 @@ class Program {
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine();
                             Console.WriteLine("Got:");
-                            Console.WriteLine(Parser.SerializeObjectToJson(d));
+                            Console.WriteLine(Serializer.SerializeObjectToJson(d));
                             Console.WriteLine("Expected:");
                             Console.WriteLine(resultJSON);
                         }
@@ -249,7 +249,7 @@ class Program {
                 try
                 {
                     var d = Parser.DeserializeObjectFromFile(args[1]);
-                    Console.WriteLine(Parser.SerializeObjectToJson(d));
+                    Console.WriteLine(Serializer.SerializeObjectToJson(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
@@ -267,7 +267,7 @@ class Program {
                 {
                     var d = Parser.DeserializeObjectFromFile(args[1]);
 
-                    Console.WriteLine(Parser.SerializeObject(d));
+                    Console.WriteLine(Serializer.SerializeObject(d));
                 }
                 catch (InvalidTokenTypeException e)
                 {
